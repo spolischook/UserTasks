@@ -26,14 +26,17 @@ const inputText = document.getElementById('user-task-text');
 let updateUsername = function(){
     document.getElementById('user-task-username-preview').innerHTML = inputUsername.value;
 };
+let updateEmail = function(){
+    document.getElementById('user-task-email-preview').innerHTML = inputEmail.value;
+};
+let updateText = function(){
+    document.getElementById('user-task-text-preview').innerHTML = inputText.value;
+};
 
 // Because username can be prefilled
 $(document).ready(updateUsername);
+$(document).ready(updateEmail);
+$(document).ready(updateText);
 inputUsername.onkeyup = updateUsername;
-
-inputEmail.onkeyup = function(){
-    document.getElementById('user-task-email-preview').innerHTML = inputEmail.value;
-};
-inputText.onkeyup = function(){
-    document.getElementById('user-task-text-preview').innerHTML = inputText.value;
-};
+inputEmail.onkeyup = updateEmail;
+inputText.onkeyup = updateText;
