@@ -24,7 +24,9 @@ abstract class AbstractModel
     protected function setData(array $fields, $data)
     {
         foreach ($fields as $field) {
-            $this->{$field} = isset($data[$field]) ? $data[$field] : null;
+            if (isset($data[$field])) {
+                $this->{$field} = $data[$field];
+            }
         }
     }
 
