@@ -90,7 +90,7 @@ class Kernel implements RequestHandlerInterface
         }
 
         $currentUrl = null;
-        if (isset($_SERVER)) {
+        if (isset($_SERVER['REQUEST_URI'])) {
             $currentUrl = parse_url($_SERVER['REQUEST_URI'])['path'];
         }
 
