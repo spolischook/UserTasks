@@ -122,7 +122,7 @@ class Task extends AbstractModel implements PersistenceInterface
             'user' => $user->getId(),
             'text' => $this->getText(),
             'image' => $this->getImage(),
-            'status' => $this->isStatus(),
+            'status' => $this->getStatus(),
         ];
 
         if ($this->getId()) {
