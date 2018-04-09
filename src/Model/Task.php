@@ -35,7 +35,7 @@ class Task extends AbstractModel implements PersistenceInterface
     protected $text;
 
     /** @var int */
-    protected $status;
+    protected $status = 0;
 
     /**
      * @var UploadedFile|string
@@ -60,8 +60,6 @@ class Task extends AbstractModel implements PersistenceInterface
                 unlink($file);
             }
         }
-
-        $this->status = 0;
     }
 
     public static function count()
@@ -314,7 +312,7 @@ class Task extends AbstractModel implements PersistenceInterface
         return $this;
     }
 
-    public function isStatus(): int
+    public function getStatus(): int
     {
         return $this->status;
     }
