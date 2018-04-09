@@ -25,6 +25,7 @@ class User extends AbstractModel implements PersistenceInterface
 
     public function validate(): bool
     {
+        // todo: implement this method
         return true;
     }
 
