@@ -44,6 +44,6 @@ class SchemaCommand extends Command
             $db->exec($query);
         }
 
-        $output->writeln('');
+        $output->writeln('<info>Schema successful created!</info>');
     }
 }
