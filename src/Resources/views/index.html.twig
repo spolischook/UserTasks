@@ -1,0 +1,80 @@
+{% extends 'layout.html.twig' %}
+{% set title='List of Tasks' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+{% block container %}
+    <div>
+        <div class="float-left"><h1>{{ title }}</h1></div>
+        <div class="float-right"><a href="/user-tasks/new" class="btn btn-primary">Create New</a></div>
+    </div>
+
+    {% set columns = ['username', 'email', 'status'] %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            {% for column in columns %}
+                {% set orientation = 'ASC' %}
+                {% if urlParams['orderBy'] is defined and urlParams['orderBy'] == column %}
+                    {% set orientation =
+                        urlParams['orientation'] is defined and urlParams['orientation'] == 'ASC'
+                        ? 'DESC'
+                        : 'ASC'
+                    %}
+                {% endif %}
+                <th scope="col">
+                    <a href="{{ currentUrl }}?{{ urlParams|merge({'orderBy': column, 'orientation': orientation})|url_encode }}">
+                        {{ column|capitalize }}
+                        {% if urlParams['orderBy'] == column %}
+                            {% if orientation == 'ASC' %}
+                                <i class="fa fa-fw fa-sort-up"></i>
+                            {% else %}
+                                <i class="fa fa-fw fa-sort-down"></i>
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+            {% endfor %}
+            {#<th scope="col">#}
+                {#<a href="/">Username<i class="fa fa-fw fa-sort"></i></a>#}
+            {#</th>#}
+            {#<th scope="col">#}
+                {#<a href="/">Email<i class="fa fa-fw fa-sort-up"></i></a>#}
+            {#</th>#}
+            {#<th scope="col">#}
+                {#<a href="/">Status<i class="fa fa-fw fa-sort-down"></i></a>#}
+            {#</th>#}
+            <th scope="col">
+
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if tasks is empty %}
+            <tr>
+                <td colspan="5">
+                    <div class="alert alert-warning" role="alert">
+                        No tasks
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            {% for task in tasks %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ task.username }}</td>
+                    <td>{{ task.email }}</td>
+                    <td>
+                        {% if task.status == 1 %}
+                            <span class="badge badge-pill badge-success">Success</span>
+                        {% else %}
+                            <span class="badge badge-pill badge-secondary">Incomplete</span>
+                        {% endif %}
+                    </td>
+                    <td>{% if guard.user == 'admin' %}<a href="/user-tasks/{{ task.id }}"><i class="fa fa-fw fa-edit"></i></a>{% endif %}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+    {% include '_include/pagination.html.twig' with {'urlParams': urlParams, 'pageCount': pageCount} %}
+{% endblock %}

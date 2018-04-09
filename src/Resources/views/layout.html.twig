@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/build/main.css">
+
+    <title>{% block pageTitle %}{% endblock %}</title>
+</head>
+<body>
+<div class="container">
+    {% include '_include/nav.html.twig' %}
+    {{ flashMessages.display() }}
+    {% block container %}{% endblock %}
+</div>
+
+{% block javascript %}
+    <script src="/build/main.js"></script>
+{% endblock %}
+</body>
+</html>

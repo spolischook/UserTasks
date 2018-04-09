@@ -1,0 +1,49 @@
+{% set currentPage = urlParams['page'] is defined ? urlParams['page'] : 1 %}
+{# todo: Hide navigation if only 1 page? #}
+<nav aria-label="pagination">
+    <ul class="pagination">
+        {% if currentPage > 1 %}
+            <li class="page-item">
+                <a
+                        class="page-link"
+                        href="{{ currentUrl }}?{{ urlParams|merge({'page': currentPage - 1})|url_encode }}">
+                    Previous
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+        {% endif %}
+
+        {% for p in 1..pageCount %}
+            <li class="page-item{% if p == currentPage %} active{% endif %}">
+                {% if p == currentPage %}
+                    <span class="page-link">
+                        {{ p }}
+                        <span class="sr-only">(current)</span>
+                    </span>
+                {% else %}
+                    <a
+                            class="page-link"
+                            href="{{ currentUrl }}?{{ urlParams|merge({'page': p})|url_encode }}">
+                        {{ p }}
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+        {% if currentPage < pageCount %}
+            <li class="page-item">
+                <a
+                        class="page-link"
+                        href="{{ currentUrl }}?{{ urlParams|merge({'page': currentPage + 1})|url_encode }}">
+                    Next
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Next</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

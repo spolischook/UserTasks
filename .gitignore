@@ -1,0 +1,7 @@
+/vendor/
+/node_modules/
+/public/images/
+/public/build/
+/bin/
+/var/cache/
+/db.sqlite

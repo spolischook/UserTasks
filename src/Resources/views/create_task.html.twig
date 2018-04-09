@@ -1,0 +1,61 @@
+{% extends 'layout.html.twig' %}
+{% set title='Create new Task' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+{% block container %}
+    <h1>{{ title }}</h1>
+    <form name="user-task" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="user-task-username">Username</label>
+            <input name="username"
+                   {% if model is defined %}
+                       value="{{ model.username }}"
+                   {% elseif guard.user is defined %}
+                       value="{{ guard.user }}"
+                   {% endif %}
+                   type="text" class="form-control" id="user-task-username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <label for="user-task-email">Email address</label>
+            <input name="email" {% if model is defined %}value="{{ model.email }}"{% endif %} type="email" class="form-control" id="user-task-email" placeholder="name@example.com">
+            <small id="emailHelp" class="form-text text-muted">WARNING! We'll share your email with all the World!</small>
+        </div>
+        <div class="form-group">
+            <label for="user-task-text">Text</label>
+            <textarea name="text" class="form-control" id="user-task-text" rows="3">{% if model is defined %}{{ model.text }}{% endif %}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="user-task-image">Image</label>
+            <input name="image" type="file" class="form-control-file js-img-file" id="user-task-image">
+        </div>
+        <div class="btn-group btn-group-toggle">
+            <button type="submit" name="user-task-submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#user-task-preview">Preview</button>
+        </div>
+        <div class="modal" id="user-task-preview" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">User Task Preview</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h2 id="user-task-username-preview">Title</h2>
+                        <h4 id="user-task-email-preview">Username</h4>
+                        <p id="user-task-text-preview">Text many many many text. Maybe some kind of lorem ipsum</p>
+                        <img id="blah" src="#" style="max-width: 320px; max-height: 240px" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="user-task-submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script src="/build/taskFormPreview.js"></script>
+{% endblock %}

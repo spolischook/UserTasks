@@ -1,0 +1,59 @@
+{% extends 'layout.html.twig' %}
+{% set title='Edit Task' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+{% block container %}
+    <h1>{{ title }}</h1>
+    <form name="user-task" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="user-task-username">Username</label>
+            <input readonly name="username" value="{{ model.username }}" type="text" class="form-control" id="user-task-username">
+        </div>
+        <div class="form-group">
+            <label for="user-task-email">Email address</label>
+            <input readonly name="email" value="{{ model.email }}" type="email" class="form-control" id="user-task-email" placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+            <label for="user-task-text">Text</label>
+            <textarea name="text" class="form-control" id="user-task-text" rows="3">{{ model.text }}</textarea>
+        </div>
+        <div class="form-group form-check">
+            <input class="form-check-input" name="status" type="checkbox"{% if model.status == 1 %} checked{% endif %} id="user-task-status">
+            <label class="form-check-label" for="defaultCheck1">
+                Is complete? {{ model.status }}
+            </label>
+        </div>
+        <div class="form-group">
+            <img src="/{{ model.image }}">
+        </div>
+        <div class="btn-group btn-group-toggle">
+            <button type="submit" name="user-task-submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#user-task-preview">Preview</button>
+        </div>
+        <div class="modal" id="user-task-preview" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">User Task Preview</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h2 id="user-task-username-preview">{{ model.username }}</h2>
+                        <h4 id="user-task-email-preview">{{ model.email }}</h4>
+                        <p id="user-task-text-preview">{{ model.text }}</p>
+                        <img id="js-image-preview" src="/{{ model.image }}" style="max-width: 320px; max-height: 240px" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="user-task-submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block javascript %}
+{{ parent() }}
+<script src="/build/taskFormPreview.js"></script>
+{% endblock %}
